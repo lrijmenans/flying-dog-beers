@@ -9,14 +9,10 @@ mytitle='Well...after Wizata...first IN HOUSE App!'
 tabtitle='TFL'
 myheading='First TFL Web App!'
 
-githublink='https://github.com/austinlasseter/flying-dog-beers'
-sourceurl='https://www.flyingdog.com/beers/'
+
 
 ########### Set up the chart
-df=pd.read_excel("https://github.com/lrijmenans/flying-dog-beers/AI analyse.xlsx", sheet_name="Tag data")
-df=df.pivot(index="Timestamp",columns='Tag name', values='Value')
-df=df.reset_index()
-fig = px.scatter(df,color="Heat input - Setpoint (BEAI FM1 DB2 Cycle Based Calculation)",y="Wall temperature - Firing zone level 1 - Avg - S1 (BEAI FM1 DB2 Cycle Based Calculation)", x="Solid fuel - Fuel A - NCV (BEAI FM1 DB2 Cycle Based Calculation)", marginal_x="histogram", marginal_y="histogram")
+
 
 
 
@@ -32,7 +28,15 @@ app.layout = html.Div(children=[
     html.H1(myheading),
     dcc.Graph(
         id='AI Walls',
-        figure=fig
+        figure={
+            'data': [
+                {'x': [1, 2, 3], 'y': [4, 1, 2], 'type': 'bar', 'name': 'Kiln 1'},
+                {'x': [1, 2, 3], 'y': [2, 4, 5], 'type': 'bar', 'name': u'Kiln 2'},
+            ],
+            'layout': {
+                'title': 'AI walls'
+            }
+        }
     ),
     
     ]
