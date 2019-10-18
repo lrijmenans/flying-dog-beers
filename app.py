@@ -4,40 +4,21 @@ import dash_html_components as html
 import plotly.graph_objs as go
 
 ########### Define your variables
-beers=['Chesapeake Stout', 'Snake Dog IPA', 'Imperial Porter', 'Double Dog IPA']
-ibu_values=[35, 60, 85, 75]
-abv_values=[5.4, 7.1, 9.2, 4.3]
-color1='lightblue'
-color2='darkgreen'
-mytitle='Beer Comparison'
-tabtitle='beer!'
-myheading='Flying Dog Beers'
-label1='IBU'
-label2='ABV'
+
+mytitle='Well...after Wizata...first IN HOUSE App!'
+tabtitle='TFL'
+myheading='First TFL Web App!'
+
 githublink='https://github.com/austinlasseter/flying-dog-beers'
 sourceurl='https://www.flyingdog.com/beers/'
 
 ########### Set up the chart
-bitterness = go.Bar(
-    x=beers,
-    y=ibu_values,
-    name=label1,
-    marker={'color':color1}
-)
-alcohol = go.Bar(
-    x=beers,
-    y=abv_values,
-    name=label2,
-    marker={'color':color2}
-)
+df=pd.read_excel("https://github.com/lrijmenans/flying-dog-beers/AI analyse.xlsx", sheet_name="Tag data")
+df=df.pivot(index="Timestamp",columns='Tag name', values='Value')
+df=df.reset_index()
+fig = px.scatter(df,color="Heat input - Setpoint (BEAI FM1 DB2 Cycle Based Calculation)",y="Wall temperature - Firing zone level 1 - Avg - S1 (BEAI FM1 DB2 Cycle Based Calculation)", x="Solid fuel - Fuel A - NCV (BEAI FM1 DB2 Cycle Based Calculation)", marginal_x="histogram", marginal_y="histogram")
 
-beer_data = [bitterness, alcohol]
-beer_layout = go.Layout(
-    barmode='group',
-    title = mytitle
-)
 
-beer_fig = go.Figure(data=beer_data, layout=beer_layout)
 
 
 ########### Initiate the app
@@ -50,12 +31,10 @@ app.title=tabtitle
 app.layout = html.Div(children=[
     html.H1(myheading),
     dcc.Graph(
-        id='flyingdog',
-        figure=beer_fig
+        id='AI Walls',
+        figure=fig
     ),
-    html.A('Code on Github', href=githublink),
-    html.Br(),
-    html.A('Data Source', href=sourceurl),
+    
     ]
 )
 
