@@ -26,6 +26,9 @@ app.title=tabtitle
 ########### Set up the layout
 app.layout = html.Div(children=[
     html.H1(myheading),
+    html.Div(children='''
+        Dash: Well...after Wizata...first IN HOUSE App!
+    '''),
     dcc.Graph(
         id='AI Walls',
         figure={
